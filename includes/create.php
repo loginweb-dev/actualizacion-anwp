@@ -42,7 +42,6 @@ function wpbc_create()
 			</div>
 			<table class="table" id="milist">
 				    <thead>
-						
 						<th>Jugador</th>
 						<th>Enero</th>
 						<th>Febrero</th>

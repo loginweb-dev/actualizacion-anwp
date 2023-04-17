@@ -16,6 +16,9 @@ defined( 'ABSPATH' ) or die( '¡Sin trampas!' );
 
 require plugin_dir_path( __FILE__ ) . 'includes/metabox-p1.php';
 require plugin_dir_path( __FILE__ ) . 'includes/create.php';
+require plugin_dir_path( __FILE__ ) . 'includes/print.php';
+require plugin_dir_path( __FILE__ ) . 'includes/asiento.php';
+//require plugin_dir_path( __FILE__ ) . 'fpdf/main.php';
 
 function wpbc_custom_admin_styles() {
     wp_enqueue_style('custom-styles', plugins_url('/bootstrap4/bootstrap.css', __FILE__ ));
@@ -26,6 +29,12 @@ function wpbc_custom_admin_js() {
     wp_enqueue_script('custom-js', plugins_url('/bootstrap4/bootstrap.js', __FILE__ ), array(), false, true);
 	}
 add_action('admin_enqueue_scripts', 'wpbc_custom_admin_js');
+
+function wpbc_custom_admin_js2() {
+    wp_enqueue_script('custom-js', plugins_url('/bootstrap4/bootstrap.bundle.min.js', __FILE__ ), array(), false, true);
+	}
+add_action('admin_enqueue_scripts', 'wpbc_custom_admin_js2');
+
 function wpbc_mijs() {
     wp_enqueue_script('handle', plugins_url('/js/mijs.js', __FILE__ ), array(), false, true);
 	}
@@ -88,7 +97,7 @@ class Custom_Table_Example_List_Table extends WP_List_Table
     function column_print($item)
     {
         return sprintf(
-            '<a type="buttom" href="/wp-content/plugins/wp-basic-crud/fpdf/main.php">Imrpimir<a/>',
+            '<a type="buttom" href="/wp-content/plugins/actualizacion-anwp/fpdf/main.php">Imrpimir<a/>',
             $item['ID']
         );
     }
@@ -175,11 +184,12 @@ class Custom_Table_Example_List_Table extends WP_List_Table
 
 function wpbc_admin_menu()
 {
-    add_menu_page('Ingresos/Egresos', 'Ingresos/Egresos', 'manage_options', 'finanzas', 'wpbc_contacts_page_handler');
+    add_menu_page('Mi Panel', 'Mi Panel', 'manage_options', 'finanzas', 'wpbc_asiento');
     
-	add_submenu_page('finanzas', 'Todos', 'Todos', 'manage_options', 'finanzas', 'wpbc_contacts_page_handler');
-    add_submenu_page('finanzas', 'Nuevo', 'Nuevo', 'manage_options', 'wpbc_create', 'wpbc_create');
-    add_submenu_page('finanzas', 'Ver', 'Ver', 'manage_options', 'finanzas_ver', 'wpbc_contacts_form_ver_handler');
+	add_submenu_page('finanzas', 'Asientos', 'Asientos', 'manage_options', 'finanzas', 'wpbc_asiento');
+	add_submenu_page('finanzas', 'Imprimir', 'Imprimir', 'manage_options', 'finanzas_print', 'wpbc_print');
+    //add_submenu_page('finanzas', 'Nuevo', 'Nuevo', 'manage_options', 'wpbc_create', 'wpbc_create');
+   //add_submenu_page('finanzas', 'Ver', 'Ver', 'manage_options', 'finanzas_ver', 'wpbc_contacts_form_ver_handler');
 }
 
 add_action('admin_menu', 'wpbc_admin_menu');
